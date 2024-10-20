@@ -67,7 +67,20 @@ SELECT wp.ID, '_virtual', p.products_virtual
 FROM wp_posts wp
 JOIN products p ON wp.post_name = p.products_model
 WHERE wp.post_type = 'product';
+INSERT INTO wp_postmeta (post_id, meta_key, meta_value)
+SELECT 
+    p.products_id,  -- WooCommerce product ID
+    '_sku',  -- Meta key for SKU
+    p.products_model  -- SKU from ZenCart
+FROM products p;
 
+-- Insert weight for products
+INSERT INTO wp_postmeta (post_id, meta_key, meta_value)
+SELECT 
+    p.products_id, 
+    '_weight', 
+    p.products_weight
+FROM products p;
 
 -- Insert Categories (Assumes you already have categories created)
 INSERT INTO wp_term_relationships (object_id, term_taxonomy_id, term_order)
