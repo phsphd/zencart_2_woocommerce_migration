@@ -14,3 +14,12 @@ function check_legacy_md5_passwords($check, $password, $hash, $user_id) {
     }
     return $check; // Default WordPress password handling
 }
+
+/*
+Hook into WordPress Login Process: You can use WordPress's wp_check_password filter to handle MD5 hashes during the login process.
+
+Add Custom Code to Handle MD5 Passwords: Add the following code to your functions.php file of your WordPress theme, or create a small plugin.
+This filter checks if the stored password hash is 32 characters long (indicating it’s MD5).
+If it matches, it verifies the password using MD5 and, upon success, updates the stored password with the more secure WordPress bcrypt hashing.
+The next time the user logs in, their password will be securely hashed using the WordPress method.
+*/
